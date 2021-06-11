@@ -17,6 +17,11 @@ public class MainFrame extends JFrame {
         textPanel = new TextPanel();
         toobar = new Toolbar();
 
+
+        // EVENT LISTENERS
+
+        //toobar.setTextPanel();
+
         btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 textPanel.appendText("Hello\n");
