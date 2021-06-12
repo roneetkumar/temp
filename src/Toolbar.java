@@ -8,7 +8,7 @@ public class Toolbar extends JPanel implements ActionListener {
     private JButton goodbye;
     private JButton button;
 
-    private TextPanel textPanel;
+    private StringListener textListener;
 
 
     Toolbar(){
@@ -27,24 +27,24 @@ public class Toolbar extends JPanel implements ActionListener {
         add(button);
     }
 
-    public void setTextPanel(TextPanel textPanel){
-        this.textPanel=textPanel;
+    public void setStringListener(StringListener textListener){
+        this.textListener=textListener;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton clicked = (JButton) e.getSource();
 
-        if (this.textPanel!=null){
+        if (this.textListener!=null){
             switch (clicked.getText()){
                 case "Hello":
-                    this.textPanel.appendText("Hello\n");
+                    this.textListener.sendText("Hello\n");
                     break;
                 case "GoodBye":
-                    this.textPanel.appendText("GoodBye\n");
+                    this.textListener.sendText("GoodBye\n");
                     break;
                 case "Button":
-                    this.textPanel.appendText("Button\n");
+                    this.textListener.sendText("Button\n");
                     break;
                 default:break;
             }
