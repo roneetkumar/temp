@@ -6,37 +6,50 @@ import java.awt.event.ActionListener;
 public class Toolbar extends JPanel implements ActionListener {
     private JButton hello;
     private JButton goodbye;
+    private JButton button;
+
+    private TextPanel textPanel;
+
 
     Toolbar(){
         hello = new JButton("Hello");
         goodbye = new JButton("GoodBye");
+        button = new JButton("Button");
 
         hello.addActionListener(this);
         goodbye.addActionListener(this);
+        button.addActionListener(this);
 
         setLayout(new FlowLayout(FlowLayout.LEFT));
 
         add(hello);
         add(goodbye);
+        add(button);
     }
 
     public void setTextPanel(TextPanel textPanel){
-
+        this.textPanel=textPanel;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton clicked = (JButton) e.getSource();
 
-        switch (clicked.getText()){
-            case "Hello":
-                System.out.println("Hello");
-                break;
-            case "GoodBye":
-                System.out.println("GoodBye");
-                break;
-            default:break;
+        if (this.textPanel!=null){
+            switch (clicked.getText()){
+                case "Hello":
+                    this.textPanel.appendText("Hello");
+                    break;
+                case "GoodBye":
+                    this.textPanel.appendText("GoodBye");
+                    break;
+                case "Button":
+                    this.textPanel.appendText("Button");
+                    break;
+                default:break;
+            }
         }
+
 
     }
 }

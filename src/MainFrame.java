@@ -6,7 +6,8 @@ import java.awt.event.ActionListener;
 public class MainFrame extends JFrame {
     private JButton btn;
     private TextPanel textPanel;
-    private Toolbar toobar;
+    private Toolbar toolbar;
+
 
     MainFrame(){
         super("Hello World");
@@ -15,12 +16,11 @@ public class MainFrame extends JFrame {
 
         btn = new JButton("Click");
         textPanel = new TextPanel();
-        toobar = new Toolbar();
+        toolbar = new Toolbar();
 
 
         // EVENT LISTENERS
-
-        //toobar.setTextPanel();
+        toolbar.setTextPanel(textPanel);
 
         btn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -28,7 +28,7 @@ public class MainFrame extends JFrame {
             }
         });
 
-        add(toobar, BorderLayout.NORTH);
+        add(toolbar, BorderLayout.NORTH);
         add(textPanel,BorderLayout.CENTER);
         add(btn,BorderLayout.SOUTH);
 
