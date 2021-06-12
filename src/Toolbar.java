@@ -38,13 +38,13 @@ public class Toolbar extends JPanel implements ActionListener {
         if (this.textPanel!=null){
             switch (clicked.getText()){
                 case "Hello":
-                    this.textPanel.appendText("Hello");
+                    this.textPanel.appendText("Hello\n");
                     break;
                 case "GoodBye":
-                    this.textPanel.appendText("GoodBye");
+                    this.textPanel.appendText("GoodBye\n");
                     break;
                 case "Button":
-                    this.textPanel.appendText("Button");
+                    this.textPanel.appendText("Button\n");
                     break;
                 default:break;
             }
