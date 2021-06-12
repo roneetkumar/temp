@@ -2,31 +2,32 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class Toolbar extends JPanel implements ActionListener {
-    private JButton hello;
-    private JButton goodbye;
-    private JButton button;
+    // private JButton hello;
+    // private JButton goodbye;
+    // private JButton button;
+
+    ArrayList<JButton> buttons = new ArrayList<>();
 
     private StringListener textListener;
 
     Toolbar(){
-
         setBorder(BorderFactory.createEtchedBorder());
-        hello = new JButton("Hello");
-        goodbye = new JButton("GoodBye");
-        button = new JButton("Button");
 
-        hello.addActionListener(this);
-        goodbye.addActionListener(this);
-        button.addActionListener(this);
+        buttons.add(new JButton("Hello"));
+        buttons.add(new JButton("GoodBye"));
+        buttons.add(new JButton("Button"));
+
+        for (JButton button: buttons) {
+            button.setBackground(Color.white);
+            button.addActionListener(this);
+            add(button);
+        }
 
         setLayout(new FlowLayout(FlowLayout.LEFT));
-        setBackground(Color.BLUE);
-
-        add(hello);
-        add(goodbye);
-        add(button);
+        setBackground(Color.DARK_GRAY);
     }
 
     public void setStringListener(StringListener textListener){
