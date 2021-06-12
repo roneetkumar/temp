@@ -36,11 +36,45 @@ public class FormPanel extends JPanel {
         submitBtn = new JButton("Submit");
 
 
+        setLayout(new GridBagLayout());
 
+        GridBagConstraints gc = new GridBagConstraints();
 
+        gc.weightx = 1;
+        gc.weighty = 1;
 
+        //        First Row
+        gc.gridx = 0;
+        gc.gridy = 0;
+        gc.weighty = 0.1;
+        gc.fill = GridBagConstraints.NONE;
+        gc.anchor = GridBagConstraints.LINE_END;
+        gc.insets = new Insets(0,0,0,5);
+        add(nameLabel,gc);
 
+        gc.gridx++;
+        gc.insets = new Insets(0,0,0,0);
+        gc.anchor = GridBagConstraints.LINE_START;
+        add(nameField,gc);
 
+        //        Second Row
+        gc.gridx = 0;
+        gc.gridy++;
+        gc.weighty = 0.1;
+        gc.insets = new Insets(0,0,0,5);
+        gc.anchor = GridBagConstraints.LINE_END;
+        add(jobLabel,gc);
+
+        gc.gridx++;
+        gc.insets = new Insets(0,0,0,0);
+        gc.anchor = GridBagConstraints.LINE_START;
+        add(jobField,gc);
+
+        //        Third Row
+        gc.gridy++;
+        gc.weighty = 2.0;
+        gc.anchor = GridBagConstraints.FIRST_LINE_START;
+        add(submitBtn,gc);
     }
 
 }
