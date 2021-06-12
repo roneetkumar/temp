@@ -10,8 +10,6 @@ public class TextPanel extends JPanel {
 
         setLayout(new BorderLayout());
 
-        //setBackground(Color.BLUE);
-
         add(new JScrollPane(textArea), BorderLayout.CENTER);
     }
 

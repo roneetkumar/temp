@@ -10,8 +10,9 @@ public class Toolbar extends JPanel implements ActionListener {
 
     private StringListener textListener;
 
-
     Toolbar(){
+
+        setBorder(BorderFactory.createEtchedBorder());
         hello = new JButton("Hello");
         goodbye = new JButton("GoodBye");
         button = new JButton("Button");
@@ -21,6 +22,7 @@ public class Toolbar extends JPanel implements ActionListener {
         button.addActionListener(this);
 
         setLayout(new FlowLayout(FlowLayout.LEFT));
+        setBackground(Color.BLUE);
 
         add(hello);
         add(goodbye);
