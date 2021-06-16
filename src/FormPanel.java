@@ -10,8 +10,9 @@ public class FormPanel extends JPanel implements ActionListener {
     private JLabel jobLabel;
     private JTextField nameField;
     private JTextField jobField;
-
     private JButton submitBtn;
+    private JList ageList;
+
 
     private FormListener formListener;
 
@@ -30,7 +31,6 @@ public class FormPanel extends JPanel implements ActionListener {
 
 
         //Object
-
         nameLabel = new JLabel("Name: ");
         jobLabel = new JLabel("Job: ");
 
@@ -41,7 +41,18 @@ public class FormPanel extends JPanel implements ActionListener {
 
         submitBtn.addActionListener(this);
 
+        ageList = new JList();
 
+        DefaultListModel ageModel = new DefaultListModel();
+        ageModel.addElement(new AgeCategory(0,"Under 18"));
+        ageModel.addElement(new AgeCategory(1,"18 to 65"));
+        ageModel.addElement(new AgeCategory(2,"65 Above"));
+
+        ageList.setModel(ageModel);
+        ageList.setPreferredSize(new Dimension(100,100));
+        ageList.setBorder(BorderFactory.createEtchedBorder());
+
+        // Layout
         setLayout(new GridBagLayout());
 
         GridBagConstraints gc = new GridBagConstraints();
@@ -77,6 +88,11 @@ public class FormPanel extends JPanel implements ActionListener {
 
         //        Third Row
         gc.gridy++;
+        gc.anchor = GridBagConstraints.FIRST_LINE_START;
+        add(ageList,gc);
+
+        //        Forth Row
+        gc.gridy++;
         gc.weighty = 2.0;
         gc.anchor = GridBagConstraints.FIRST_LINE_START;
         add(submitBtn,gc);
@@ -92,8 +108,9 @@ public class FormPanel extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String name = nameField.getText();
         String job = jobField.getText();
+        AgeCategory age = (AgeCategory) ageList.getSelectedValue();
 
-        FormEvent fe = new FormEvent(e,name,job);
+        FormEvent fe = new FormEvent(e,name,job, age);
 
         if(formListener != null){
             formListener.formEventTrigger(fe);

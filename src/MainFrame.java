@@ -30,13 +30,18 @@ public class MainFrame extends JFrame {
             public void formEventTrigger(FormEvent e) {
                 String name = e.getName();
                 String job = e.getJob();
-                textPanel.appendText("Name : " + name + "\nJob : " + job + "\n\n");
+                AgeCategory age = e.getAge();
+                textPanel.appendText("Name : "
+                        + name + "\nJob : "
+                        + job + "\nAge: "
+                        + age + "\n\n"
+                );
             }
         });
 
         add(formPanel, BorderLayout.WEST);
         add(toolbar, BorderLayout.NORTH);
-        add(textPanel,BorderLayout.EAST);
+        add(textPanel,BorderLayout.CENTER);
 
         setSize(600,500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

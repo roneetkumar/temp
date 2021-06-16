@@ -35,8 +35,6 @@ public class Toolbar extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JButton clicked = (JButton) e.getSource();
 
-      //  JButton  <- Object
-
         if (this.textListener!=null){
             switch (clicked.getText()){
                 case "Hello":
