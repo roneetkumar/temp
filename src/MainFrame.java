@@ -24,9 +24,19 @@ public class MainFrame extends JFrame {
             }
         });
 
+
+        formPanel.setFormListener(new FormListener() {
+            @Override
+            public void formEventTrigger(FormEvent e) {
+                String name = e.getName();
+                String job = e.getJob();
+                textPanel.appendText("Name : " + name + "\nJob : " + job + "\n\n");
+            }
+        });
+
         add(formPanel, BorderLayout.WEST);
         add(toolbar, BorderLayout.NORTH);
-        add(textPanel,BorderLayout.CENTER);
+        add(textPanel,BorderLayout.EAST);
 
         setSize(600,500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

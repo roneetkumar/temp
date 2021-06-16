@@ -5,9 +5,6 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 public class Toolbar extends JPanel implements ActionListener {
-    // private JButton hello;
-    // private JButton goodbye;
-    // private JButton button;
 
     ArrayList<JButton> buttons = new ArrayList<>();
 
@@ -38,6 +35,8 @@ public class Toolbar extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         JButton clicked = (JButton) e.getSource();
 
+      //  JButton  <- Object
+
         if (this.textListener!=null){
             switch (clicked.getText()){
                 case "Hello":
@@ -52,7 +51,5 @@ public class Toolbar extends JPanel implements ActionListener {
                 default:break;
             }
         }
-
-
     }
 }

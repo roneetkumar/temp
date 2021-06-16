@@ -1,8 +1,10 @@
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class FormPanel extends JPanel {
+public class FormPanel extends JPanel implements ActionListener {
 
     private JLabel nameLabel;
     private JLabel jobLabel;
@@ -10,6 +12,8 @@ public class FormPanel extends JPanel {
     private JTextField jobField;
 
     private JButton submitBtn;
+
+    private FormListener formListener;
 
 
     FormPanel(){
@@ -34,6 +38,8 @@ public class FormPanel extends JPanel {
         jobField = new JTextField(10);
 
         submitBtn = new JButton("Submit");
+
+        submitBtn.addActionListener(this);
 
 
         setLayout(new GridBagLayout());
@@ -60,7 +66,6 @@ public class FormPanel extends JPanel {
         //        Second Row
         gc.gridx = 0;
         gc.gridy++;
-        gc.weighty = 0.1;
         gc.insets = new Insets(0,0,0,5);
         gc.anchor = GridBagConstraints.LINE_END;
         add(jobLabel,gc);
@@ -75,6 +80,23 @@ public class FormPanel extends JPanel {
         gc.weighty = 2.0;
         gc.anchor = GridBagConstraints.FIRST_LINE_START;
         add(submitBtn,gc);
+
     }
 
+
+    public void setFormListener(FormListener formListener) {
+        this.formListener = formListener;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String name = nameField.getText();
+        String job = jobField.getText();
+
+        FormEvent fe = new FormEvent(e,name,job);
+
+        if(formListener != null){
+            formListener.formEventTrigger(fe);
+        }
+    }
 }
