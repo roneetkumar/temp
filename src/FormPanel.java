@@ -20,6 +20,9 @@ public class FormPanel extends JPanel implements ActionListener {
 
     private FormListener formListener;
 
+    private ArrayList<String> langs = new ArrayList<>();
+
+
 
     FormPanel(){
         Dimension dimension = getPreferredSize();
@@ -68,16 +71,6 @@ public class FormPanel extends JPanel implements ActionListener {
         langEng = new JCheckBox();
         langFr = new JCheckBox();
 
-//        langEng.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                boolean isChecked = langEng.isSelected();
-//                System.out.println(isChecked);
-//                nameLabel.setEnabled(!isChecked);
-//                nameField.setEnabled(!isChecked);
-//            }
-//        });
-
         componentLayout();
     }
 
@@ -92,7 +85,6 @@ public class FormPanel extends JPanel implements ActionListener {
         String job = jobField.getText();
         AgeCategory age = (AgeCategory) ageList.getSelectedValue();
         String status = (String) empBox.getSelectedItem();
-        ArrayList<String> langs = new ArrayList<>();
 
         if (langEng.isSelected()) {
             langs.add("English");
