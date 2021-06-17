@@ -4,6 +4,7 @@ import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 public class FormPanel extends JPanel implements ActionListener {
 
@@ -14,7 +15,8 @@ public class FormPanel extends JPanel implements ActionListener {
     private JButton submitBtn;
     private JList ageList;
     private JComboBox empBox;
-
+    private JCheckBox langEng;
+    private JCheckBox langFr;
 
     private FormListener formListener;
 
@@ -52,6 +54,7 @@ public class FormPanel extends JPanel implements ActionListener {
         ageModel.addElement(new AgeCategory(1,"18 to 65"));
         ageModel.addElement(new AgeCategory(2,"65 Above"));
         ageList.setModel(ageModel);
+        ageList.setSelectedIndex(0);
         ageList.setPreferredSize(new Dimension(100,100));
         ageList.setBorder(BorderFactory.createEtchedBorder());
 
@@ -62,8 +65,20 @@ public class FormPanel extends JPanel implements ActionListener {
         empModel.addElement("Un-Employed");
         empBox.setModel(empModel);
 
-       componentLayout();
+        langEng = new JCheckBox();
+        langFr = new JCheckBox();
 
+//        langEng.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                boolean isChecked = langEng.isSelected();
+//                System.out.println(isChecked);
+//                nameLabel.setEnabled(!isChecked);
+//                nameField.setEnabled(!isChecked);
+//            }
+//        });
+
+        componentLayout();
     }
 
 
@@ -76,12 +91,26 @@ public class FormPanel extends JPanel implements ActionListener {
         String name = nameField.getText();
         String job = jobField.getText();
         AgeCategory age = (AgeCategory) ageList.getSelectedValue();
+        String status = (String) empBox.getSelectedItem();
+        ArrayList<String> langs = new ArrayList<>();
+
+        if (langEng.isSelected()) {
+            langs.add("English");
+        }
+
+        if (langFr.isSelected()){
+            langs.add("French");
+        }
 
 
-        FormEvent fe = new FormEvent(e,name,job, age);
+        FormEvent fe = new FormEvent(e,name,job, age, status,langs);
 
         if(formListener != null){
             formListener.formEventTrigger(fe);
+            nameField.setText("");
+            jobField.setText("");
+            ageList.setSelectedIndex(0);
+            empBox.setSelectedIndex(0);
         }
     }
 
@@ -145,6 +174,30 @@ public class FormPanel extends JPanel implements ActionListener {
         add(empBox,gc);
 
         //        Fifth Row
+        gc.gridx = 0;
+        gc.gridy++;
+        gc.anchor = GridBagConstraints.LINE_END;
+        gc.insets = new Insets(0,0,0,5);
+        add(new JLabel("English: "),gc);
+
+        gc.gridx++;
+        gc.anchor = GridBagConstraints.LINE_START;
+        gc.insets = new Insets(0,0,0,0);
+        add(langEng,gc);
+
+        //        Sixth Row
+        gc.gridx = 0;
+        gc.gridy++;
+        gc.anchor = GridBagConstraints.LINE_END;
+        gc.insets = new Insets(0,0,0,5);
+        add(new JLabel("French: "),gc);
+
+        gc.gridx++;
+        gc.anchor = GridBagConstraints.LINE_START;
+        gc.insets = new Insets(0,0,0,0);
+        add(langFr,gc);
+
+        //        Final Row
         gc.gridy++;
         gc.weighty = 2.0;
         gc.anchor = GridBagConstraints.FIRST_LINE_START;

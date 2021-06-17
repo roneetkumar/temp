@@ -28,15 +28,7 @@ public class MainFrame extends JFrame {
         formPanel.setFormListener(new FormListener() {
             @Override
             public void formEventTrigger(FormEvent e) {
-                String name = e.getName();
-                String job = e.getJob();
-                AgeCategory age = e.getAge();
-
-                textPanel.appendText("Name : "
-                        + name + "\nJob : "
-                        + job + "\nAge: "
-                        + age + "\n\n"
-                );
+                textPanel.appendText(String.valueOf(e));
             }
         });
 
