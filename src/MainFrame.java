@@ -31,6 +31,7 @@ public class MainFrame extends JFrame {
                 String name = e.getName();
                 String job = e.getJob();
                 AgeCategory age = e.getAge();
+
                 textPanel.appendText("Name : "
                         + name + "\nJob : "
                         + job + "\nAge: "

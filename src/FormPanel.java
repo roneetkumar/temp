@@ -1,5 +1,6 @@
 import javax.swing.*;
 import javax.swing.border.Border;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,6 +13,7 @@ public class FormPanel extends JPanel implements ActionListener {
     private JTextField jobField;
     private JButton submitBtn;
     private JList ageList;
+    private JComboBox empBox;
 
 
     private FormListener formListener;
@@ -22,9 +24,12 @@ public class FormPanel extends JPanel implements ActionListener {
         dimension.width = 250;
         setPreferredSize(dimension);
 
-        Border innerBorder = BorderFactory.createTitledBorder("Add Person");
+        TitledBorder innerBorder = BorderFactory.createTitledBorder("Add Person");
         Border outerBorder = BorderFactory.createEmptyBorder(5,5,5,5);
         Border fullBorder = BorderFactory.createCompoundBorder(outerBorder,innerBorder);
+
+        innerBorder.setTitleJustification(TitledBorder.CENTER);
+
         setBorder(fullBorder);
 
         // setBorder(BorderFactory.createTitledBorder("Form"));
@@ -42,16 +47,45 @@ public class FormPanel extends JPanel implements ActionListener {
         submitBtn.addActionListener(this);
 
         ageList = new JList();
-
         DefaultListModel ageModel = new DefaultListModel();
         ageModel.addElement(new AgeCategory(0,"Under 18"));
         ageModel.addElement(new AgeCategory(1,"18 to 65"));
         ageModel.addElement(new AgeCategory(2,"65 Above"));
-
         ageList.setModel(ageModel);
         ageList.setPreferredSize(new Dimension(100,100));
         ageList.setBorder(BorderFactory.createEtchedBorder());
 
+        empBox = new JComboBox();
+        DefaultComboBoxModel empModel = new DefaultComboBoxModel();
+        empModel.addElement("Employed");
+        empModel.addElement("Self-Employed");
+        empModel.addElement("Un-Employed");
+        empBox.setModel(empModel);
+
+       componentLayout();
+
+    }
+
+
+    public void setFormListener(FormListener formListener) {
+        this.formListener = formListener;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String name = nameField.getText();
+        String job = jobField.getText();
+        AgeCategory age = (AgeCategory) ageList.getSelectedValue();
+
+
+        FormEvent fe = new FormEvent(e,name,job, age);
+
+        if(formListener != null){
+            formListener.formEventTrigger(fe);
+        }
+    }
+
+    private void componentLayout() {
         // Layout
         setLayout(new GridBagLayout());
 
@@ -87,33 +121,33 @@ public class FormPanel extends JPanel implements ActionListener {
         add(jobField,gc);
 
         //        Third Row
+        gc.gridx = 0;
         gc.gridy++;
-        gc.anchor = GridBagConstraints.FIRST_LINE_START;
+        gc.anchor = GridBagConstraints.FIRST_LINE_END;
+        gc.insets = new Insets(0,0,0,5);
+        add(new JLabel("Age: "),gc);
+
+        gc.gridx++;
+        gc.anchor = GridBagConstraints.LINE_START;
+        gc.insets = new Insets(0,0,0,0);
         add(ageList,gc);
 
         //        Forth Row
+        gc.gridx = 0;
+        gc.gridy++;
+        gc.anchor = GridBagConstraints.LINE_END;
+        gc.insets = new Insets(0,0,0,5);
+        add(new JLabel("Emp Status: "),gc);
+
+        gc.gridx++;
+        gc.anchor = GridBagConstraints.LINE_START;
+        gc.insets = new Insets(0,0,0,0);
+        add(empBox,gc);
+
+        //        Fifth Row
         gc.gridy++;
         gc.weighty = 2.0;
         gc.anchor = GridBagConstraints.FIRST_LINE_START;
         add(submitBtn,gc);
-
-    }
-
-
-    public void setFormListener(FormListener formListener) {
-        this.formListener = formListener;
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        String name = nameField.getText();
-        String job = jobField.getText();
-        AgeCategory age = (AgeCategory) ageList.getSelectedValue();
-
-        FormEvent fe = new FormEvent(e,name,job, age);
-
-        if(formListener != null){
-            formListener.formEventTrigger(fe);
-        }
     }
 }
