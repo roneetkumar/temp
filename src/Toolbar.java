@@ -31,6 +31,10 @@ public class Toolbar extends JPanel implements ActionListener {
         this.textListener=textListener;
     }
 
+    public void changeColor(Color color){
+        setBackground(color);
+    }
+
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton clicked = (JButton) e.getSource();

@@ -95,27 +95,38 @@ public class FormPanel extends JPanel implements ActionListener {
         AgeCategory age = (AgeCategory) ageList.getSelectedValue();
         String status = (String) empBox.getSelectedItem();
         ArrayList<String> langs = new ArrayList<>();
+        String gender = "";
 
-        String gender = genderBtnGroup.getSelection().getActionCommand();
+        try {
+            gender = genderBtnGroup.getSelection().getActionCommand();
 
-        if (langEng.isSelected()) {
-            langs.add("English");
+            if (langEng.isSelected()) {
+                langs.add("English");
+            }
+
+            if (langFr.isSelected()){
+                langs.add("French");
+            }
+
+            FormEvent fe = new FormEvent(e,name,job, age, gender, status,langs);
+
+            if(formListener != null){
+                formListener.formEventTrigger(fe);
+                nameField.setText("");
+                jobField.setText("");
+                ageList.setSelectedIndex(0);
+                empBox.setSelectedIndex(0);
+            }
+
+        }catch (Exception ex){
+            JOptionPane.showMessageDialog(
+                null,
+                "Please select Gender!",
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+            );
         }
 
-        if (langFr.isSelected()){
-            langs.add("French");
-        }
-
-        FormEvent fe = new FormEvent(e,name,job, age, gender, status,langs);
-
-        if(formListener != null){
-            formListener.formEventTrigger(fe);
-            nameField.setText("");
-            jobField.setText("");
-            ageList.setSelectedIndex(0);
-            empBox.setSelectedIndex(0);
-
-        }
     }
 
     private void createLabel(JLabel label,GridBagConstraints gc, int anchor){
