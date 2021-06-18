@@ -17,12 +17,11 @@ public class FormPanel extends JPanel implements ActionListener {
     private JComboBox empBox;
     private JCheckBox langEng;
     private JCheckBox langFr;
+    private JRadioButton maleRadio;
+    private JRadioButton femaleRadio;
+    private ButtonGroup genderBtnGroup;
 
     private FormListener formListener;
-
-    private ArrayList<String> langs = new ArrayList<>();
-
-
 
     FormPanel(){
         Dimension dimension = getPreferredSize();
@@ -38,7 +37,6 @@ public class FormPanel extends JPanel implements ActionListener {
         setBorder(fullBorder);
 
         // setBorder(BorderFactory.createTitledBorder("Form"));
-
 
         //Object
         nameLabel = new JLabel("Name: ");
@@ -71,6 +69,17 @@ public class FormPanel extends JPanel implements ActionListener {
         langEng = new JCheckBox();
         langFr = new JCheckBox();
 
+        maleRadio = new JRadioButton();
+        femaleRadio = new JRadioButton();
+        genderBtnGroup = new ButtonGroup();
+
+        maleRadio.setActionCommand("male");
+        femaleRadio.setActionCommand("female");
+
+
+        genderBtnGroup.add(maleRadio);
+        genderBtnGroup.add(femaleRadio);
+
         componentLayout();
     }
 
@@ -85,6 +94,9 @@ public class FormPanel extends JPanel implements ActionListener {
         String job = jobField.getText();
         AgeCategory age = (AgeCategory) ageList.getSelectedValue();
         String status = (String) empBox.getSelectedItem();
+        ArrayList<String> langs = new ArrayList<>();
+
+        String gender = genderBtnGroup.getSelection().getActionCommand();
 
         if (langEng.isSelected()) {
             langs.add("English");
@@ -94,8 +106,7 @@ public class FormPanel extends JPanel implements ActionListener {
             langs.add("French");
         }
 
-
-        FormEvent fe = new FormEvent(e,name,job, age, status,langs);
+        FormEvent fe = new FormEvent(e,name,job, age, gender, status,langs);
 
         if(formListener != null){
             formListener.formEventTrigger(fe);
@@ -103,7 +114,25 @@ public class FormPanel extends JPanel implements ActionListener {
             jobField.setText("");
             ageList.setSelectedIndex(0);
             empBox.setSelectedIndex(0);
+
         }
+    }
+
+    private void createLabel(JLabel label,GridBagConstraints gc, int anchor){
+        gc.gridx = 0;
+        gc.gridy++;
+        gc.weighty = 0.1;
+        gc.anchor = anchor;
+        gc.insets = new Insets(0,0,0,5);
+        add(label,gc);
+    }
+
+    private void createField(Component component,GridBagConstraints gc, int anchor){
+        gc.gridx++;
+        gc.weighty = 0.1;
+        gc.anchor = anchor;
+        gc.insets = new Insets(0,0,0,0);
+        add(component,gc);
     }
 
     private void componentLayout() {
@@ -114,80 +143,41 @@ public class FormPanel extends JPanel implements ActionListener {
 
         gc.weightx = 1;
         gc.weighty = 1;
+        gc.fill = GridBagConstraints.NONE;
 
         //        First Row
-        gc.gridx = 0;
-        gc.gridy = 0;
-        gc.weighty = 0.1;
-        gc.fill = GridBagConstraints.NONE;
-        gc.anchor = GridBagConstraints.LINE_END;
-        gc.insets = new Insets(0,0,0,5);
-        add(nameLabel,gc);
+        createLabel(nameLabel, gc, GridBagConstraints.LINE_END);
+        createField(nameField,gc,GridBagConstraints.LINE_START);
 
-        gc.gridx++;
-        gc.insets = new Insets(0,0,0,0);
-        gc.anchor = GridBagConstraints.LINE_START;
-        add(nameField,gc);
 
         //        Second Row
-        gc.gridx = 0;
-        gc.gridy++;
-        gc.insets = new Insets(0,0,0,5);
-        gc.anchor = GridBagConstraints.LINE_END;
-        add(jobLabel,gc);
-
-        gc.gridx++;
-        gc.insets = new Insets(0,0,0,0);
-        gc.anchor = GridBagConstraints.LINE_START;
-        add(jobField,gc);
+        createLabel(jobLabel, gc, GridBagConstraints.LINE_END);
+        createField(jobField,gc,GridBagConstraints.LINE_START);
 
         //        Third Row
-        gc.gridx = 0;
-        gc.gridy++;
-        gc.anchor = GridBagConstraints.FIRST_LINE_END;
-        gc.insets = new Insets(0,0,0,5);
-        add(new JLabel("Age: "),gc);
-
-        gc.gridx++;
-        gc.anchor = GridBagConstraints.LINE_START;
-        gc.insets = new Insets(0,0,0,0);
-        add(ageList,gc);
+        createLabel(new JLabel("Age: "), gc, GridBagConstraints.FIRST_LINE_END);
+        createField(ageList,gc,GridBagConstraints.LINE_START);
 
         //        Forth Row
-        gc.gridx = 0;
-        gc.gridy++;
-        gc.anchor = GridBagConstraints.LINE_END;
-        gc.insets = new Insets(0,0,0,5);
-        add(new JLabel("Emp Status: "),gc);
-
-        gc.gridx++;
-        gc.anchor = GridBagConstraints.LINE_START;
-        gc.insets = new Insets(0,0,0,0);
-        add(empBox,gc);
+        createLabel(new JLabel("Emp Status: "), gc, GridBagConstraints.LINE_END);
+        createField(empBox,gc,GridBagConstraints.LINE_START);
 
         //        Fifth Row
-        gc.gridx = 0;
-        gc.gridy++;
-        gc.anchor = GridBagConstraints.LINE_END;
-        gc.insets = new Insets(0,0,0,5);
-        add(new JLabel("English: "),gc);
-
-        gc.gridx++;
-        gc.anchor = GridBagConstraints.LINE_START;
-        gc.insets = new Insets(0,0,0,0);
-        add(langEng,gc);
+        createLabel(new JLabel("English: "), gc, GridBagConstraints.LINE_END);
+        createField(langEng,gc,GridBagConstraints.LINE_START);
 
         //        Sixth Row
-        gc.gridx = 0;
-        gc.gridy++;
-        gc.anchor = GridBagConstraints.LINE_END;
-        gc.insets = new Insets(0,0,0,5);
-        add(new JLabel("French: "),gc);
+        createLabel(new JLabel("French: "), gc, GridBagConstraints.LINE_END);
+        createField(langFr,gc,GridBagConstraints.LINE_START);
 
-        gc.gridx++;
-        gc.anchor = GridBagConstraints.LINE_START;
-        gc.insets = new Insets(0,0,0,0);
-        add(langFr,gc);
+        //        7th Row
+
+        createLabel(new JLabel("Male: "), gc, GridBagConstraints.LINE_END);
+        createField(maleRadio,gc,GridBagConstraints.LINE_START);
+
+        //        8th Row
+        createLabel(new JLabel("Female: "), gc, GridBagConstraints.LINE_END);
+        createField(femaleRadio,gc,GridBagConstraints.LINE_START);
 
         //        Final Row
         gc.gridy++;

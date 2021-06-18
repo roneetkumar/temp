@@ -1,11 +1,13 @@
 import java.util.ArrayList;
 import java.util.EventObject;
+import java.util.Locale;
 
 public class FormEvent extends EventObject {
 
     private String name;
     private String job;
     private AgeCategory age;
+    private String gender;
     private String status;
     private ArrayList<String> langs = new ArrayList<>();
 
@@ -18,6 +20,7 @@ public class FormEvent extends EventObject {
             String name,
             String job,
             AgeCategory age,
+            String gender,
             String status,
             ArrayList<String> langs
 
@@ -26,6 +29,7 @@ public class FormEvent extends EventObject {
         this.name = name;
         this.job = job;
         this.age = age;
+        this.gender = gender;
         this.status = status;
         this.langs = langs;
     }
@@ -51,7 +55,8 @@ public class FormEvent extends EventObject {
         return "Name : "
                 + name + "\nJob : "
                 + job + "\nAge: "
-                + age + "\nStatus: "
+                + age + "\nGender: "
+                + gender.toUpperCase() + "\nStatus: "
                 + status + "\nLanguages: "
                 + printList(langs)
                 + "\n\n";
