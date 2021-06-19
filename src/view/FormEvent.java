@@ -1,15 +1,11 @@
+package view;
+
 import java.util.ArrayList;
 import java.util.EventObject;
-import java.util.Locale;
 
 public class FormEvent extends EventObject {
 
-    private String name;
-    private String job;
-    private AgeCategory age;
-    private String gender;
-    private String status;
-    private ArrayList<String> langs = new ArrayList<>();
+
 
     public FormEvent(Object source) {
         super(source);

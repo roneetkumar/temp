@@ -1,3 +1,5 @@
+package view;
+
 public class AgeCategory {
     private int id;
     private String text;
