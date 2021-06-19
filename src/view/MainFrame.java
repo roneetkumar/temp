@@ -1,5 +1,7 @@
 package view;
 
+import controller.Controller;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,15 +12,23 @@ public class MainFrame extends JFrame {
     private TextPanel textPanel;
     private Toolbar toolbar;
     private FormPanel formPanel;
+    private TablePanel tablePanel;
+
+    Controller controller;
 
 
     MainFrame(){
         super("Hello World");
         setLayout(new BorderLayout());
 
+        controller = new Controller();
+
         textPanel = new TextPanel();
         toolbar = new Toolbar();
         formPanel = new FormPanel();
+        tablePanel = new TablePanel();
+
+        tablePanel.setTableData(controller.getPeople());
 
         setJMenuBar(createMenuBar());
 
@@ -30,17 +40,18 @@ public class MainFrame extends JFrame {
             }
         });
 
-
         formPanel.setFormListener(new FormListener() {
             @Override
-            public void formEventTrigger(FormEvent e) {
-                textPanel.appendText(String.valueOf(e));
+            public void formEventTrigger(FormEvent fe) {
+               // textPanel.appendText(String.valueOf(e));
+                controller.addPerson(fe);
+                tablePanel.refresh();
             }
         });
 
         add(formPanel, BorderLayout.WEST);
         add(toolbar, BorderLayout.NORTH);
-        add(textPanel,BorderLayout.CENTER);
+        add(tablePanel,BorderLayout.CENTER);
 
         setSize(600,500);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

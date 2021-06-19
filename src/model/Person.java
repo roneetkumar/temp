@@ -1,11 +1,13 @@
 package model;
 
+import controller.Util;
+
 import java.util.ArrayList;
 
 public class Person {
     private static int count = 1;
 
-    private int id;
+    private Integer id;
     private String name;
     private String job;
     private AgeCategory age;
@@ -14,7 +16,6 @@ public class Person {
     private ArrayList<String> langs = new ArrayList<>();
 
     public Person(
-        int id,
         String name,
         String job,
         AgeCategory age,
@@ -31,7 +32,7 @@ public class Person {
         this.langs = langs;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -86,4 +87,18 @@ public class Person {
     public void setLangs(ArrayList<String> langs) {
         this.langs = langs;
     }
+
+    @Override
+    public String toString() {
+        return  "ID: "
+                + id + "\nName : "
+                + name + "\nJob : "
+                + job + "\nAge: "
+                + age + "\nGender: "
+                + gender + "\nStatus: "
+                + employmentCategory + "\nLanguages: "
+                + Util.printList(langs)
+                + "\n\n";
+    }
+
 }

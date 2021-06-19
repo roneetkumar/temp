@@ -1,5 +1,9 @@
 package view;
 
+import model.EmploymentCategory;
+import model.Gender;
+import model.Person;
+import model.AgeCategory;
 import javax.swing.*;
 import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
@@ -53,9 +57,9 @@ public class FormPanel extends JPanel implements ActionListener {
 
         ageList = new JList();
         DefaultListModel ageModel = new DefaultListModel();
-        ageModel.addElement(new AgeCategory(0,"Under 18"));
-        ageModel.addElement(new AgeCategory(1,"18 to 65"));
-        ageModel.addElement(new AgeCategory(2,"65 Above"));
+        ageModel.addElement(AgeCategory.CHILD);
+        ageModel.addElement(AgeCategory.ADULT);
+        ageModel.addElement(AgeCategory.SENIOR);
         ageList.setModel(ageModel);
         ageList.setSelectedIndex(0);
         ageList.setPreferredSize(new Dimension(100,100));
@@ -63,9 +67,9 @@ public class FormPanel extends JPanel implements ActionListener {
 
         empBox = new JComboBox();
         DefaultComboBoxModel empModel = new DefaultComboBoxModel();
-        empModel.addElement("Employed");
-        empModel.addElement("Self-Employed");
-        empModel.addElement("Un-Employed");
+        empModel.addElement(EmploymentCategory.EMPLOYED);
+        empModel.addElement(EmploymentCategory.SELF_EMPLOYED);
+        empModel.addElement(EmploymentCategory.UNEMPLOYED);
         empBox.setModel(empModel);
 
         langEng = new JCheckBox();
@@ -95,12 +99,17 @@ public class FormPanel extends JPanel implements ActionListener {
         String name = nameField.getText();
         String job = jobField.getText();
         AgeCategory age = (AgeCategory) ageList.getSelectedValue();
-        String status = (String) empBox.getSelectedItem();
+        EmploymentCategory employmentCategory = (EmploymentCategory) empBox.getSelectedItem();
         ArrayList<String> langs = new ArrayList<>();
-        String gender = "";
+
 
         try {
-            gender = genderBtnGroup.getSelection().getActionCommand();
+            String genderValue = genderBtnGroup.getSelection().getActionCommand();
+
+            Gender gender = genderValue == "male"
+                    ? Gender.MALE
+                    : Gender.FEMALE;
+
 
             if (langEng.isSelected()) {
                 langs.add("English");
@@ -110,7 +119,9 @@ public class FormPanel extends JPanel implements ActionListener {
                 langs.add("French");
             }
 
-            FormEvent fe = new FormEvent(e,name,job, age, gender, status,langs);
+            Person p = new Person(name,job,age,gender,employmentCategory,langs);
+
+            FormEvent fe = new FormEvent(e,p);
 
             if(formListener != null){
                 formListener.formEventTrigger(fe);
